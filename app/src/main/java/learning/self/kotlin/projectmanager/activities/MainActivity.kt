@@ -1,7 +1,8 @@
-package learning.self.kotlin.projectmanager
+package learning.self.kotlin.projectmanager.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import learning.self.kotlin.projectmanager.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

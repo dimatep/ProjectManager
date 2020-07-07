@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "53496177629",
+    "firebase_url": "https://projectmanager-dimatep.firebaseio.com",
+    "project_id": "projectmanager-dimatep",
+    "storage_bucket": "projectmanager-dimatep.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53496177629:android:094e5eb18e57ea88f68c34",
+        "android_client_info": {
+          "package_name": "learning.self.kotlin.projectmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53496177629-3eoflm8pce4ubd95kp9okhnu8mtfboiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN5KnlnXkr39ApqtTs_dq4mv-tTFjbtts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53496177629-3eoflm8pce4ubd95kp9okhnu8mtfboiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package learning.self.kotlin.projectmanager
+package learning.self.kotlin.projectmanager.activities
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_splash.*
+import learning.self.kotlin.projectmanager.R
+import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +24,17 @@ class SplashActivity : AppCompatActivity() {
 
         // Adding the handler to after the a task after some delay.
         Handler().postDelayed({
-            // Start the Login Activity
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            finish() // Call this when your activity is done and should be closed.
-        }, 2500) // Here we pass the delay time in milliSeconds after which the splash activity will disappear.
 
+            var currentUserID = FireStoreHandler().getCurrentUserId()
+            if(currentUserID.isNotEmpty()){
+                //auto login - go straight to the main activity
+                startActivity(Intent(this, MainActivity::class.java))
+            }else{
+                // Start the Login Activity
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+
+            finish() // Call this when your activity is done and should be closed
+        }, 2500) // Here we pass the delay time in milliSeconds after which the splash activity will disappear
     }
 }
