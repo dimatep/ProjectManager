@@ -2,15 +2,12 @@ package learning.self.kotlin.projectmanager.activities
 
 import android.content.Intent
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import learning.self.kotlin.projectmanager.R
 import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.models.User
@@ -48,7 +45,7 @@ class SignInActivity : BaseActivity() {
                 .addOnCompleteListener(this) { task ->
                     hideProgressDialog()
                     if (task.isSuccessful) {
-                        FireStoreHandler().signInUser(this)
+                        FireStoreHandler().loadUserData(this)
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(baseContext,
@@ -88,7 +85,7 @@ class SignInActivity : BaseActivity() {
         val actionBar = supportActionBar
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.back_ic_black)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_black)
         }
         toolbar_sign_in_activity.setNavigationOnClickListener{onBackPressed()}
     }

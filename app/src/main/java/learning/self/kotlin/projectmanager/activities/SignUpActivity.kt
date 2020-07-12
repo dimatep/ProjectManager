@@ -1,7 +1,6 @@
 package learning.self.kotlin.projectmanager.activities
 
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
@@ -43,7 +42,7 @@ class SignUpActivity : BaseActivity() {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.back_ic_black)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_black)
         }
         toolbar_sign_up_activity.setNavigationOnClickListener { onBackPressed() }
     }
