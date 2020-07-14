@@ -18,7 +18,8 @@ object Constants{
 
     const val READ_STORAGE_PERMISSION_CODE = 1
     const val PICK_IMAGE_REQUEST_CODE = 2
-
+    const val DOCUMENT_ID : String = "documentID"
+    const val TASK_LIST : String = "taskList"
     fun getFileExtension(activity : Activity, uri : Uri?) : String?{
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }

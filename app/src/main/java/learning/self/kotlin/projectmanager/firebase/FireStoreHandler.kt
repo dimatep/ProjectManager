@@ -24,6 +24,22 @@ class FireStoreHandler {
             }
     }
 
+    fun getBoardDetails(activity : TaskListActivity, documentID : String){
+        mFireStore.collection(Constants.BOARDS)
+            .document(documentID)
+            .get()
+            .addOnSuccessListener {
+                    document ->
+                Log.e("GetBoardList", document.toString())
+                val board = document.toObject(Board::class.java)!!
+                board.documentID = document.id
+                activity.boardDetails(board)
+
+            }.addOnFailureListener {
+                activity.hideProgressDialog()
+            }
+    }
+
     fun createBoard(activity: CreateBoardActivity, boardInfo : Board){
         mFireStore.collection(Constants.BOARDS)
             .document()
@@ -32,9 +48,26 @@ class FireStoreHandler {
                 Toast.makeText(activity,"Board created successfully", Toast.LENGTH_SHORT).show()
                 activity.boardCreatedSuccessfully() //show toast to the user
             }.addOnFailureListener {
-                exception ->
                 activity.hideProgressDialog()
             }
+    }
+
+    fun addUpdateTaskList (activity: TaskListActivity, board : Board){
+
+        val taskListHashMap = HashMap<String, Any>()
+        taskListHashMap[Constants.TASK_LIST] = board.taskList
+
+        mFireStore.collection(Constants.BOARDS)
+            .document(board.documentID)
+            .update(taskListHashMap)
+            .addOnSuccessListener {
+                Toast.makeText(activity,"Task List updated successfully!",Toast.LENGTH_SHORT).show()
+                activity.addUpdateTaskListSuccess()
+            }.addOnFailureListener {
+                activity.hideProgressDialog()
+                Toast.makeText(activity,"Failed updating Task List!",Toast.LENGTH_SHORT).show()
+            }
+
     }
 
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap : HashMap<String, Any>){
@@ -45,7 +78,6 @@ class FireStoreHandler {
                 Toast.makeText(activity,"Profile updated successfully!",Toast.LENGTH_SHORT).show()
                 activity.profileUpdateSuccess()
             }.addOnFailureListener {
-                exception ->
                 activity.hideProgressDialog()
                 Toast.makeText(activity,"Failed updating profile!",Toast.LENGTH_SHORT).show()
 
@@ -65,6 +97,7 @@ class FireStoreHandler {
                     board.documentID = i.id
                     boardsList.add(board);
                 }
+                //pass the result to base activity
                 activity.populateBoardsToUI(boardsList)
             }.addOnFailureListener {
                 activity.hideProgressDialog()

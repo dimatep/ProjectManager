@@ -40,7 +40,7 @@ class SignInActivity : BaseActivity() {
         val password = sign_in_password_et.text.toString().trim { it <= ' '}
 
         if(validateForm(email, password)) {
-            showProgressDialog("Please wait...")
+            showProgressDialog()
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     hideProgressDialog()

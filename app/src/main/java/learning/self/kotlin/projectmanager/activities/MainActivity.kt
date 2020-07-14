@@ -2,20 +2,15 @@ package learning.self.kotlin.projectmanager.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Typeface
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import learning.self.kotlin.projectmanager.models.User
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.main_content.*
@@ -24,6 +19,7 @@ import learning.self.kotlin.projectmanager.R
 import learning.self.kotlin.projectmanager.adapters.BoardItemAdapter
 import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.models.Board
+import learning.self.kotlin.projectmanager.models.User
 import learning.self.kotlin.projectmanager.utils.Constants
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +56,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             val adapter = BoardItemAdapter(this, boardsList)
             boards_list_rv.adapter = adapter
+
+            adapter.setOnClickListener(object : BoardItemAdapter.OnClickListener{
+                override fun onClick(position: Int, model: Board) {
+                    val intent = Intent(this@MainActivity, TaskListActivity::class.java)
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentID)
+                    startActivity(intent)
+                }
+            })
         }else{
             boards_list_rv.visibility = View.GONE
             no_boards_tv.visibility = View.VISIBLE
@@ -103,7 +107,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         user_name_tv.text = user.name
 
         if(readBoardsList){
-            showProgressDialog("Please wait...")
+            showProgressDialog()
             FireStoreHandler().getBoardsList(this)
         }
 

@@ -53,7 +53,7 @@ class SignUpActivity : BaseActivity() {
         val password = password_et.text.toString().trim { it <= ' ' }
 
         if (validateForm(name, email, password)) {
-            showProgressDialog("Please wait...")
+            showProgressDialog()
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->

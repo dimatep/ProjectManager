@@ -7,9 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -50,7 +48,7 @@ class MyProfileActivity : BaseActivity() {
             if(mSelectedImageFileUri != null){
                 uploadUserImage()
             }else{
-                showProgressDialog("Please Wait...")
+                showProgressDialog()
                 updateUserProfileData()
             }
         }
@@ -129,7 +127,7 @@ class MyProfileActivity : BaseActivity() {
 
     // store user image to firebase storage
     private fun uploadUserImage(){
-        showProgressDialog("Please wait...")
+        showProgressDialog()
 
         if(mSelectedImageFileUri != null){
             val sRef : StorageReference = FirebaseStorage.getInstance()

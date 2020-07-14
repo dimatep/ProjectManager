@@ -55,7 +55,7 @@ class CreateBoardActivity : BaseActivity() {
             if(mSelectedImageFileUri != null){
                 uploadBoardImage()
             }else{
-                showProgressDialog("Please wait...")
+                showProgressDialog()
                 createBoard()
             }
         }
@@ -79,7 +79,7 @@ class CreateBoardActivity : BaseActivity() {
     }
 
     private fun uploadBoardImage() {
-        showProgressDialog("Please wait...")
+        showProgressDialog()
 
         val sRef: StorageReference = FirebaseStorage.getInstance()
             .reference
