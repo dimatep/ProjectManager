@@ -1,6 +1,9 @@
 package learning.self.kotlin.projectmanager.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_task_list.*
 import learning.self.kotlin.projectmanager.R
@@ -40,6 +43,22 @@ class TaskListActivity : BaseActivity() {
 
         val adapter = TaskItemAdapter(this,board.taskList)
         task_list_rv.adapter = adapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_members,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_members -> {
+                val intent = Intent(this,MembersActivity::class.java)
+                intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setActionBar(){

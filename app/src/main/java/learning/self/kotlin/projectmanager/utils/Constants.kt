@@ -20,6 +20,8 @@ object Constants{
     const val PICK_IMAGE_REQUEST_CODE = 2
     const val DOCUMENT_ID : String = "documentID"
     const val TASK_LIST : String = "taskList"
+    const val BOARD_DETAIL : String = "board_detail"
+    const val ID : String = "id"
     fun getFileExtension(activity : Activity, uri : Uri?) : String?{
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }
