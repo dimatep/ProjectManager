@@ -7,6 +7,7 @@ import learning.self.kotlin.projectmanager.R
 import learning.self.kotlin.projectmanager.adapters.TaskItemAdapter
 import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.models.Board
+import learning.self.kotlin.projectmanager.models.Card
 import learning.self.kotlin.projectmanager.models.Task
 import learning.self.kotlin.projectmanager.utils.Constants
 
@@ -67,4 +68,41 @@ class TaskListActivity : BaseActivity() {
         FireStoreHandler().addUpdateTaskList(this,mBoardDetails)
     }
 
+    fun updateTaskList(position: Int, listName: String, model : Task){
+        val task = Task(listName,model.createdBy)
+        mBoardDetails.taskList[position] = task
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+
+        showProgressDialog()
+        FireStoreHandler().addUpdateTaskList(this,mBoardDetails)
+    }
+
+    fun deleteTaskList(position : Int){
+        mBoardDetails.taskList.removeAt(position)
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+
+        showProgressDialog()
+        FireStoreHandler().addUpdateTaskList(this,mBoardDetails)
+    }
+
+    fun addCardToTask(position : Int , cardName:String){
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+
+        val cardAssignedUsersList : ArrayList<String> = ArrayList()
+        val currentUserID = FireStoreHandler().getCurrentUserId()
+        cardAssignedUsersList.add(currentUserID)
+        val card = Card(cardName, currentUserID,cardAssignedUsersList)
+
+        val cardList = mBoardDetails.taskList[position].cards
+        cardList.add(card) //add the card to cads list in the task list
+
+        val task = Task(mBoardDetails.taskList[position].title,
+            mBoardDetails.taskList[position].createdBy,
+            cardList)
+
+        mBoardDetails.taskList[position] = task
+
+        showProgressDialog()
+        FireStoreHandler().addUpdateTaskList(this,mBoardDetails)
+    }
 }
