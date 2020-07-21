@@ -1,6 +1,7 @@
 package learning.self.kotlin.projectmanager.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,13 @@ open class CardListItemAdapter(private val context: Context, private var list: A
             holder.itemView.card_name_tv.typeface = regularFont
             holder.itemView.card_name_tv.text = model.name
 
+            if(model.labelColor.isNotEmpty()){
+                holder.itemView.view_label_color.visibility = View.VISIBLE
+                holder.itemView.view_label_color.setBackgroundColor(
+                    Color.parseColor(model.labelColor))
+            }else{
+                holder.itemView.view_label_color.visibility = View.GONE
+            }
             holder.itemView.setOnClickListener {
                 if(onClickListener != null){
                     onClickListener!!.onClick(position)

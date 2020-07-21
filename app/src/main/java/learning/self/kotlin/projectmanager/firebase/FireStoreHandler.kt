@@ -61,19 +61,22 @@ class FireStoreHandler {
             .document(board.documentID)
             .update(taskListHashMap)
             .addOnSuccessListener {
-                Toast.makeText(activity,"Task List updated successfully!",Toast.LENGTH_SHORT).show()
-                if(activity is TaskListActivity)
-                    activity.addUpdateTaskListSuccess()
-                else if(activity is CardDetailsActivity)
-                    activity.addUpdateTaskListSuccess()
-            }.addOnFailureListener {
-                if(activity is TaskListActivity)
-                    activity.hideProgressDialog()
-                else if(activity is CardDetailsActivity)
-                    activity.hideProgressDialog()
-                Toast.makeText(activity,"Failed updating Task List!",Toast.LENGTH_SHORT).show()
-            }
+                Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
 
+                if (activity is TaskListActivity) {
+                    activity.addUpdateTaskListSuccess()
+                } else if (activity is CardDetailsActivity) {
+                    activity.addUpdateTaskListSuccess()
+                }
+            }
+            .addOnFailureListener { e ->
+                if (activity is TaskListActivity) {
+                    activity.hideProgressDialog()
+                } else if (activity is TaskListActivity) {
+                    activity.hideProgressDialog()
+                }
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+            }
     }
 
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap : HashMap<String, Any>){

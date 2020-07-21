@@ -96,7 +96,7 @@ class TaskListActivity : BaseActivity() {
     fun createTaskList(taskName : String){
         val task = Task(taskName,FireStoreHandler().getCurrentUserId())
         mBoardDetails.taskList.add(0,task)
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)// Remove the last position as we have added the item manually for adding the TaskList.
 
         showProgressDialog()
         FireStoreHandler().addUpdateTaskList(this,mBoardDetails)

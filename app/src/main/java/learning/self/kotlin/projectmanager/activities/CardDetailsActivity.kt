@@ -3,6 +3,7 @@ package learning.self.kotlin.projectmanager.activities
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_card_details.*
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.dialog_serach_member.*
 import learning.self.kotlin.projectmanager.R
+import learning.self.kotlin.projectmanager.activities.dialogs.LabelColorListDialog
+import learning.self.kotlin.projectmanager.adapters.LabelColorListItemAdapter
 import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.models.Board
 import learning.self.kotlin.projectmanager.models.Card
@@ -24,6 +27,7 @@ class CardDetailsActivity : BaseActivity() {
     private lateinit var mBoardDetails : Board
     private var mTaskListPosition = -1
     private var mCardListPosition = -1
+    private var mSelectedColor = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +39,21 @@ class CardDetailsActivity : BaseActivity() {
         name_card_details_et.setText(mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].name)
         name_card_details_et.setSelection(name_card_details_et.text.toString().length) //set focus in the end of the text
 
+        mSelectedColor = mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].labelColor
+        if(mSelectedColor.isNotEmpty()){
+            setColor()
+        }
+
         update_card_details_btn.setOnClickListener {
             if(name_card_details_et.text.toString().isNotEmpty()){
                 updateCardDetails()
             }else{
                 Toast.makeText(this,"Please enter a card name", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        select_label_color_tv.setOnClickListener {
+            labelColorsListDialog()
         }
     }
 
@@ -92,16 +105,17 @@ class CardDetailsActivity : BaseActivity() {
     }
 
     private fun updateCardDetails(){
-       val card = Card(
-           name_card_details_et.text.toString(),
-           mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].createdBy,
-           mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].assignedTo
-       )
+        val card = Card(
+            name_card_details_et.text.toString(),
+            mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].createdBy,
+            mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].assignedTo,
+            mSelectedColor
+        )
 
         mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition] = card
 
         showProgressDialog()
-        FireStoreHandler().addUpdateTaskList(this,mBoardDetails)
+        FireStoreHandler().addUpdateTaskList(this@CardDetailsActivity, mBoardDetails)
     }
 
     private fun deleteCard(){
@@ -154,5 +168,38 @@ class CardDetailsActivity : BaseActivity() {
         val alertDialog : AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    private fun colorsList() : ArrayList<String> {
+        val colorsList : ArrayList<String> = ArrayList()
+        colorsList.add("#0C90F1")
+        colorsList.add("#F72400")
+        colorsList.add("#90F700")
+        colorsList.add("#8400F7")
+        colorsList.add("#F700CE")
+        colorsList.add("#FF9800")
+        colorsList.add("#00C1FB")
+
+        return colorsList
+    }
+
+    private fun setColor(){
+        select_label_color_tv.text = ""
+        select_label_color_tv.setBackgroundColor(Color.parseColor(mSelectedColor))
+    }
+
+    private fun labelColorsListDialog(){
+        val colorsList : ArrayList<String> = colorsList()
+        val listDialog = object : LabelColorListDialog(
+            this,
+            colorsList,
+            "Select Label Color",
+            mSelectedColor){
+            override fun onItemSelected(color: String) {
+                mSelectedColor = color
+                setColor()
+            }
+        }
+        listDialog.show()
     }
 }
