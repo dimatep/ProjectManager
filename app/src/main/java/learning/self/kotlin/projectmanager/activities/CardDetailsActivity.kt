@@ -2,21 +2,15 @@ package learning.self.kotlin.projectmanager.activities
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_card_details.*
-import kotlinx.android.synthetic.main.activity_my_profile.*
-import kotlinx.android.synthetic.main.dialog_serach_member.*
 import learning.self.kotlin.projectmanager.R
 import learning.self.kotlin.projectmanager.activities.dialogs.LabelColorListDialog
-import learning.self.kotlin.projectmanager.adapters.LabelColorListItemAdapter
 import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.models.Board
 import learning.self.kotlin.projectmanager.models.Card
