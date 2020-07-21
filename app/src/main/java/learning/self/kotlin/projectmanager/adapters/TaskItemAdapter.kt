@@ -3,6 +3,7 @@ package learning.self.kotlin.projectmanager.adapters
 import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,18 @@ open class TaskItemAdapter(private val context: Context, private var list : Arra
         val model = list[position]
 
         if(holder is MyViewHolder){
+            val regularFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Regular.ttf")
+            val boldFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Bold.ttf")
+
+            holder.itemView.add_task_list_tv.typeface = boldFont
+            holder.itemView.task_list_name_et.typeface = regularFont
+            holder.itemView.task_list_title_tv.typeface = regularFont
+            holder.itemView.edit_task_list_name_et.typeface = regularFont
+            holder.itemView.card_name_et.typeface = regularFont
+            holder.itemView.add_card_tv.typeface = boldFont
+
+
+
             if(position == list.size-1){
                 holder.itemView.add_task_list_tv.visibility = View.VISIBLE
                 holder.itemView.task_item_ll.visibility = View.GONE
@@ -120,6 +133,15 @@ open class TaskItemAdapter(private val context: Context, private var list : Arra
             val adapter = CardListItemAdapter(context, model.cards)
             holder.itemView.card_list_rv.adapter = adapter
 
+            adapter.setOnClickListener(object :
+                CardListItemAdapter.OnClickListener {
+                override fun onClick(cardPosition: Int) {
+
+                    if (context is TaskListActivity) {
+                        context.cardDetails(position, cardPosition)
+                    }
+                }
+            })
         }
     }
 

@@ -2,11 +2,13 @@ package learning.self.kotlin.projectmanager.utils
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.AssetManager
 import android.graphics.Typeface
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import learning.self.kotlin.projectmanager.activities.CreateBoardActivity
+import java.security.AccessController.getContext
 
 object Constants{
     const val USERS : String = "users"
@@ -22,6 +24,10 @@ object Constants{
     const val TASK_LIST : String = "taskList"
     const val BOARD_DETAIL : String = "board_detail"
     const val ID : String = "id"
+    const val EMAIL : String = "email"
+
+    const val TASK_LIST_ITEM_POSITION : String = "task_list_item_position"
+    const val CARD_LIST_ITEM_POSITION : String = "card_list_item_position"
     fun getFileExtension(activity : Activity, uri : Uri?) : String?{
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }

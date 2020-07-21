@@ -1,6 +1,7 @@
 package learning.self.kotlin.projectmanager.adapters
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,15 @@ open class CardListItemAdapter(private val context: Context, private var list: A
         val model = list[position]
 
         if(holder is MyViewHolder){
+            val regularFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Regular.ttf")
+            holder.itemView.card_name_tv.typeface = regularFont
             holder.itemView.card_name_tv.text = model.name
+
+            holder.itemView.setOnClickListener {
+                if(onClickListener != null){
+                    onClickListener!!.onClick(position)
+                }
+            }
         }
     }
 
@@ -38,7 +47,7 @@ open class CardListItemAdapter(private val context: Context, private var list: A
     }
 
     interface OnClickListener{
-        fun onClick(position : Int, model : Card)
+        fun onClick(position : Int)
     }
 
     private class MyViewHolder(view : View): RecyclerView.ViewHolder(view){

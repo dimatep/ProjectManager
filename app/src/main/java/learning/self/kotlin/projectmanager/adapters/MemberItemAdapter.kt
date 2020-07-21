@@ -1,6 +1,7 @@
 package learning.self.kotlin.projectmanager.adapters
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,10 @@ open class MemberItemAdapter (private val context: Context, private var list: Ar
         val model = list[position]
 
         if(holder is MyViewHolder){
+            val regularFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Regular.ttf")
+            val boldFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Bold.ttf")
+            holder.itemView.member_name_tv.typeface = boldFont
+            holder.itemView.member_email_tv.typeface = regularFont
             holder.itemView.member_name_tv.text = model.name
             holder.itemView.member_email_tv.text = model.email
             Glide

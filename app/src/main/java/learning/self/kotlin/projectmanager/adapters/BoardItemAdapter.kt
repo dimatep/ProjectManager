@@ -1,6 +1,7 @@
 package learning.self.kotlin.projectmanager.adapters
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,13 +29,19 @@ open class BoardItemAdapter (private val context:Context, private var list : Arr
         val model = list[position]
 
         if(holder is MyViewHolder){
+            val regularFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Regular.ttf")
+            val boldFont: Typeface = Typeface.createFromAsset(holder.itemView.getContext().assets, "Raleway-Bold.ttf")
+
             Glide
                 .with(context)
                 .load(model.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_board_place_holder)
                 .into(holder.itemView.item_board_iv)
-
+            //set fonts
+            holder.itemView.item_board_name_tv.typeface = boldFont
+            holder.itemView.item_board_created_by_tv.typeface = regularFont
+            //set text
             holder.itemView.item_board_name_tv.text = model.name
             holder.itemView.item_board_created_by_tv.text = "Created by: " + model.createdBy
 
