@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/selected_member_image_iv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="3dp"
+        android:src="@drawable/ic_user_place_holder"
+        android:visibility="visible"
+        app:civ_border_color="@color/primary_text_color"
+        app:civ_border_width="0.5dp"
+        tools:visibility="gone" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/add_member_iv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="3dp"
+        android:src="@drawable/ic_add_member"
+        android:visibility="visible"
+        app:civ_border_color="@color/colorAccent"
+        app:civ_border_width="2dp"
+        tools:visibility="visible" />
+</LinearLayout>

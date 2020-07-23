@@ -14,12 +14,14 @@ import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.models.Board
 import learning.self.kotlin.projectmanager.models.Card
 import learning.self.kotlin.projectmanager.models.Task
+import learning.self.kotlin.projectmanager.models.User
 import learning.self.kotlin.projectmanager.utils.Constants
 
 class TaskListActivity : BaseActivity() {
 
     private lateinit var mBoardDetails: Board
     private lateinit var mBoardDocumentID : String
+    lateinit var mAssignedMembersDetailList : ArrayList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +39,8 @@ class TaskListActivity : BaseActivity() {
         hideProgressDialog()
         setActionBar()
 
-        val addTaskList = Task("Add List")
-        board.taskList.add(addTaskList)
-
-        task_list_rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
-        task_list_rv.setHasFixedSize(true)
-
-        val adapter = TaskItemAdapter(this,board.taskList)
-        task_list_rv.adapter = adapter
+        showProgressDialog()
+        FireStoreHandler().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -145,7 +141,32 @@ class TaskListActivity : BaseActivity() {
         intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)
         intent.putExtra(Constants.TASK_LIST_ITEM_POSITION, taskListPosition)
         intent.putExtra(Constants.CARD_LIST_ITEM_POSITION, cardPosition)
+        intent.putExtra(Constants.BOARD_MEMBERS_LIST, mAssignedMembersDetailList)
         startActivityForResult(intent, CARD_DETAILS_REQUEST_CODE)
+    }
+
+    fun boardMembersDetailList(list : ArrayList<User>){
+        mAssignedMembersDetailList = list
+        hideProgressDialog()
+
+        val addTaskList = Task("Add List")
+        mBoardDetails.taskList.add(addTaskList)
+
+        task_list_rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        task_list_rv.setHasFixedSize(true)
+
+        val adapter = TaskItemAdapter(this,mBoardDetails.taskList)
+        task_list_rv.adapter = adapter
+
+    }
+
+    fun updateCardsInTaskList(taskListPosition: Int, cards : ArrayList<Card>){
+        //remove the 'add card' card
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+        mBoardDetails.taskList[taskListPosition].cards = cards
+        //show progress dialog and update the database with the new order of list
+        showProgressDialog()
+        FireStoreHandler().addUpdateTaskList(this,mBoardDetails)
     }
 
     companion object{

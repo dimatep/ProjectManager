@@ -1,8 +1,7 @@
-package learning.self.kotlin.projectmanager.activities.dialogs
+package learning.self.kotlin.projectmanager.dialogs
 
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,11 +30,11 @@ abstract class LabelColorListDialog (
     }
 
     private fun setUpRecyclerView(view : View){
-        view.color_title_tv.text = title
+        view.dialog_title_tv.text = title
 
-        view.color_list_rv.layoutManager = LinearLayoutManager(context)
+        view.dialog_list_rv.layoutManager = LinearLayoutManager(context)
         adapter = LabelColorListItemAdapter(context, list, mSelectedColor)
-        view.color_list_rv.adapter = adapter
+        view.dialog_list_rv.adapter = adapter
 
         adapter!!.onItemClickListener = object  : LabelColorListItemAdapter.OnItemClickListener{
             override fun onClick(position: Int, color: String) {

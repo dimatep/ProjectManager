@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_card.view.*
 import kotlinx.android.synthetic.main.item_member.view.*
 import learning.self.kotlin.projectmanager.R
-import learning.self.kotlin.projectmanager.models.Card
 import learning.self.kotlin.projectmanager.models.User
+import learning.self.kotlin.projectmanager.utils.Constants
 
 open class MemberItemAdapter (private val context: Context, private var list: ArrayList<User>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
+    private var onClickListener : OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(
@@ -43,11 +43,33 @@ open class MemberItemAdapter (private val context: Context, private var list: Ar
                 .fitCenter()
                 .placeholder(R.drawable.ic_user_place_holder)
                 .into(holder.itemView.member_image_iv)
+
+            if(model.selected){
+                holder.itemView.selected_member_iv.visibility = View.VISIBLE
+            }else{
+                holder.itemView.selected_member_iv.visibility = View.GONE
+            }
+
+            holder.itemView.setOnClickListener {
+                if(onClickListener != null){
+                    if(model.selected){
+                        onClickListener!!.onClick(position,model,Constants.UN_SELECT)
+                    }else{
+                        onClickListener!!.onClick(position,model,Constants.SELECT)
+                    }
+                }
+            }
         }
     }
 
-
-    private class MyViewHolder(view : View): RecyclerView.ViewHolder(view){
-
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
     }
+
+    interface OnClickListener {
+        fun onClick(position: Int, user: User, action: String)
+    }
+
+
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

@@ -1,5 +1,6 @@
 package learning.self.kotlin.projectmanager.models
 
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -10,7 +11,8 @@ data class User (
     val email : String = "",
     val image : String = "",
     val mobile : Long = 0,
-    val fcmToken : String = ""
+    val fcmToken : String = "",
+    var selected : Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

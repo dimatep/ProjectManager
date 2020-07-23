@@ -9,16 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_task.view.*
 import learning.self.kotlin.projectmanager.R
 import learning.self.kotlin.projectmanager.activities.TaskListActivity
 import learning.self.kotlin.projectmanager.models.Task
+import java.util.*
+import kotlin.collections.ArrayList
 
 open class TaskItemAdapter(private val context: Context, private var list : ArrayList<Task>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
+    private var mPositionDraggedFrom = -1
+    private var mPositionDraggedTo = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_task, parent, false)
@@ -46,8 +52,6 @@ open class TaskItemAdapter(private val context: Context, private var list : Arra
             holder.itemView.edit_task_list_name_et.typeface = regularFont
             holder.itemView.card_name_et.typeface = regularFont
             holder.itemView.add_card_tv.typeface = boldFont
-
-
 
             if(position == list.size-1){
                 holder.itemView.add_task_list_tv.visibility = View.VISIBLE
@@ -142,6 +146,57 @@ open class TaskItemAdapter(private val context: Context, private var list : Arra
                     }
                 }
             })
+
+            val dividerItemDecoration = DividerItemDecoration(context,
+            DividerItemDecoration.VERTICAL)
+
+            holder.itemView.card_list_rv.addItemDecoration(dividerItemDecoration)
+
+            val helper = ItemTouchHelper(
+                object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0){
+
+                    override fun onMove(
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder
+                    ): Boolean {
+                        val draggedPosition = viewHolder.adapterPosition
+                        val targetPosition = target.adapterPosition
+
+                        if(mPositionDraggedFrom == -1){
+                            mPositionDraggedFrom = draggedPosition
+                        }
+
+                        mPositionDraggedTo = targetPosition
+                        //using swap function to store the dragging cards changes in the list of cards in database
+                        Collections.swap(list[position].cards, draggedPosition, targetPosition)
+                       //notify the adapter about the change
+                        adapter.notifyItemMoved(draggedPosition,targetPosition)
+                        return false
+                    }
+
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                    }
+
+                    //this function runs when the drag and drop done
+                    override fun clearView(
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder
+                    ) {
+                        super.clearView(recyclerView, viewHolder)
+                        //if any change was done update the cards list task
+                        if(mPositionDraggedFrom != -1 && mPositionDraggedTo != -1 && mPositionDraggedFrom != mPositionDraggedTo){
+                            (context as TaskListActivity).updateCardsInTaskList(position,list[position].cards)
+                        }
+                        // reset values
+                        mPositionDraggedFrom = -1
+                        mPositionDraggedTo = -1
+                    }
+                }
+            )
+
+            helper.attachToRecyclerView(holder.itemView.card_list_rv)
         }
     }
 

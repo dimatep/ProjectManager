@@ -22,7 +22,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/color_title_tv"
+                android:id="@+id/dialog_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -40,7 +40,7 @@
                 android:background="@color/divider_color" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/color_list_rv"
+                android:id="@+id/dialog_list_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible"
