@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Project Manager</string>
+
+    <string name="default_notification_channel_id">project_manager_notification_channel_id</string>
+    <string name="fcm_key">AAAADHSe490:APA91bFoGC_rYPMY-OeuL-5OvAAXBS3hANCoh0BHGNIedKXdsbbgLrXXF1lVTRfRYhGD1wKTdMCSVihwIH5niZH3qulQgQSBl4V9gUOdeGGWZ3HZarJ7mzxpPSqyL3hG57cDOJfeieDZ</string>
+
 </resources>
