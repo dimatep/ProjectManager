@@ -21,11 +21,11 @@ The database stored in Google's Firebase.**
 ## Screenshots
 
 [<img src="https://user-images.githubusercontent.com/51478377/88479812-8397ee80-cf5a-11ea-883b-56ce4041e3dc.jpeg" align="left"
-width="260" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479812-8397ee80-cf5a-11ea-883b-56ce4041e3dc.jpeg)
+width="250" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479812-8397ee80-cf5a-11ea-883b-56ce4041e3dc.jpeg)
 [<img src="https://user-images.githubusercontent.com/51478377/88479813-872b7580-cf5a-11ea-812c-a0af825f8d4f.jpeg" align="center"
-width="260" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479813-872b7580-cf5a-11ea-812c-a0af825f8d4f.jpeg)
+width="250" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479813-872b7580-cf5a-11ea-812c-a0af825f8d4f.jpeg)
 [<img src="https://user-images.githubusercontent.com/51478377/88479816-898dcf80-cf5a-11ea-971c-b14a40cc0cec.jpeg" align="right"
-width="260" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479816-898dcf80-cf5a-11ea-971c-b14a40cc0cec.jpeg)
+width="250" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479816-898dcf80-cf5a-11ea-971c-b14a40cc0cec.jpeg)
     
 [<img src="https://user-images.githubusercontent.com/51478377/88479817-8abefc80-cf5a-11ea-8707-8ad3dc919382.jpeg" align="left"
 width="260" hspace="10" vspace="10">](https://user-images.githubusercontent.com/51478377/88479817-8abefc80-cf5a-11ea-8707-8ad3dc919382.jpeg)
