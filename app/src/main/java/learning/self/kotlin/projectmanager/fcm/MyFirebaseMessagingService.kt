@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
@@ -16,8 +17,6 @@ import learning.self.kotlin.projectmanager.activities.MainActivity
 import learning.self.kotlin.projectmanager.activities.SignInActivity
 import learning.self.kotlin.projectmanager.firebase.FireStoreHandler
 import learning.self.kotlin.projectmanager.utils.Constants
-import learning.self.kotlin.projectmanager.utils.Constants.FCM_KEY_TITLE
-
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -46,7 +45,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String?){
-        //TODO implement this func
+        // Here we have saved the token in the Shared Preferences
+        val sharedPreferences =
+            this.getSharedPreferences(Constants.POJECTMANAGER_PREFERENCES, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(Constants.FCM_TOKEN, token)
+        editor.apply()
     }
 
     private fun sendNotification(title : String, message : String){
